@@ -114,3 +114,75 @@ SELECT
 	COUNT(*)
 FROM rental;
 
+SELECT
+	customer_id,
+	COUNT(*) AS alquileres
+FROM rental
+GROUP BY customer_id
+ORDER BY alquileres desc;
+
+SELECT
+	customer_id,
+	staff_id,
+	COUNT(*) AS alquileres
+FROM rental
+WHERE customer_id = 236
+GROUP BY customer_id, staff_id
+ORDER BY alquileres desc;
+--suma con SUM
+SELECT	
+	customer_id,
+	SUM(amount)
+FROM payment
+GROUP BY customer_id
+ORDER BY 2 DESC;
+
+--Promedio con AVG
+SELECT	
+	customer_id,
+	AVG(amount)
+FROM payment
+GROUP BY customer_id
+ORDER BY 2 desc;
+
+--
+SELECT	
+	customer_id,
+	AVG(amount),
+	SUM(amount),
+	MAX(amount)-MIN(amount) AS diferencia
+FROM payment
+GROUP BY customer_id
+ORDER BY 2 desc;
+
+
+SELECT
+	amount,
+	customer_id,
+	COUNT (*) AS Qpagos
+FROM payment
+GROUP BY 1,2;
+
+SELECT
+	customer_id,
+	MAX (rental_date),
+	MIN (rental_date)
+FROM rental
+GROUP BY customer_id;
+
+
+--Retonar todos los clientes que tienen un promedio de pago mayor a 5:
+SELECT
+	customer_id,
+	AVG(amount)
+FROM payment
+GROUP BY customer_id
+HAVING AVG(amount) > 5;
+
+--Retorna la suma de todos los pagos por cliente, de aquellos clientes que han pagado mas de 7.99 alguna vez:
+SELECT
+	customer_id,
+	SUM(amount)
+FROM payment
+GROUP BY customer_id
+HAVING MAX(amount) > 7.99;
